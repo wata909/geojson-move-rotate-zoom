@@ -40,11 +40,18 @@ const overlayLayer = new TileLayer({
   properties: {
     name: OVERLAY_LAYER_NAME,
   },
+  // 乗算ブレンドモードを設定
+  // 以下は ES6 の書き方
+  // または overlayLayer.setProperties({ 'blendMode': 'multiply' });
+  blendMode: 'multiply',
 });
 
+<<<<<<< HEAD
 // 乗算ブレンドモードを設定
 overlayLayer.setProperties({ 'blendMode': 'multiply' });  
 
+=======
+>>>>>>> parent of 1805b21 (change overlay setting)
 const map = new Map({
   target: "map",
   layers: [baseLayer, overlayLayer],
