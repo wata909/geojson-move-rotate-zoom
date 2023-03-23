@@ -15,28 +15,46 @@ import { registerFileReader, downloadGeoJson } from "./file";
 import { displayDemoLayer } from "./demo";
 
 const BASE_LAYER_NAME = "BASE_LAYER";
+const OVERLAY_LAYER_NAME = "OVERLAY_LAYER";
+
+const baseLayer = new TileLayer({
+  source: new XYZ({
+    url: "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg",
+    attributions:
+      'Map data © <a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>',
+    maxZoom: 18,
+  }),
+  properties: {
+    name: BASE_LAYER_NAME,
+  },
+});
+
+const overlayLayer = new TileLayer({
+  source: new XYZ({
+    url: "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png",
+    attributions:
+      'Map data © <a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>',
+    maxZoom: 18,
+  }),
+  properties: {
+    name: OVERLAY_LAYER_NAME,
+  },
+  // 乗算ブレンドモードを設定
+  // 以下は ES6 の書き方
+  // または overlayLayer.setProperties({ 'blendMode': 'multiply' });
+  blendMode: 'multiply',
+});
 
 const map = new Map({
   target: "map",
-  layers: [
-    new TileLayer({
-      source: new XYZ({
-        url: "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg",
-        attributions:
-          'Map data © <a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>',
-        maxZoom: 18,
-      }),
-      properties: {
-        name: BASE_LAYER_NAME,
-      },
-    }),
-  ],
+  layers: [baseLayer, overlayLayer],
   view: new View({
     center: fromLonLat([135, 35]),
     zoom: 5,
   }),
   controls: defaultControl(),
 });
+
 
 const interaction = new Transform({
   enableRotatedTransform: false,
