@@ -39,9 +39,8 @@ const overlayLayer = new TileLayer({
   properties: {
     name: OVERLAY_LAYER_NAME,
   },
+  opacity: 0.5, // 透過度を設定
 });
-
-overlayLayer.setProperties({ 'blendMode': 'multiply' });
 
 const map = new Map({
   target: "map",
