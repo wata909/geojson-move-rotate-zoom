@@ -39,9 +39,16 @@ const overlayLayer = new TileLayer({
   properties: {
     name: OVERLAY_LAYER_NAME,
   },
+  style: new Style({
+    render: function (frameState, layerState) {
+      const layerProperties = layerState.layer.getProperties();
+      const blendMode = layerProperties.blendMode || "normal";
+      this.getImage().style.mixBlendMode = blendMode;
+      return this.getImage();
+    },
+  }),
+  blendMode: "multiply",
 });
-
-overlayLayer.setProperties({ 'blendMode': 'multiply' });
 
 const map = new Map({
   target: "map",
