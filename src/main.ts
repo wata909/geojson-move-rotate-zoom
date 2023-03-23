@@ -13,7 +13,6 @@ import { shiftKeyOnly, always } from "ol/events/condition";
 import Transform from "ol-ext/interaction/Transform";
 import { registerFileReader, downloadGeoJson } from "./file";
 import { displayDemoLayer } from "./demo";
-import { Style } from 'ol/style';
 
 const BASE_LAYER_NAME = "BASE_LAYER";
 const OVERLAY_LAYER_NAME = "OVERLAY_LAYER";
@@ -40,11 +39,9 @@ const overlayLayer = new TileLayer({
   properties: {
     name: OVERLAY_LAYER_NAME,
   },
-  // 乗算ブレンドモードを設定
-  // 以下は ES6 の書き方
-  // または overlayLayer.setProperties({ 'blendMode': 'multiply' });
-  // blendMode: 'multiply',
 });
+
+overlayLayer.setProperties({ 'blendMode': 'multiply' });
 
 const map = new Map({
   target: "map",
